@@ -1,0 +1,146 @@
+docker build .
+
+docker run <image id>
+
+docker run -p <port>:<docker port> <image id>
+
+docker stop
+
+image in read only, if there is any changes, we need to rebuild image
+
+every instruction is a layer
+
+when one layer change, all subsequent layer needs to be reexecuted
+
+code only exsits in images not container
+
+docker ps --help
+
+docker start <image id>
+
+docker run - attached to a container, docker start will detach
+if you want run to be detached, just add '-d', e.g., docker run -p 8000:80 -d <image id>
+
+attach: docker attach <container id>
+
+docker logs -f <container name/id>
+
+-f: keep listening
+
+docker run -it <image id>
+
+docker start -a -i <container name>
+
+docker rm <>
+
+docker images
+
+containers need to be removed first --> docker rmi <image id> (can be multiple ids here)
+
+when you run a container using command, e.g., docker run -p 3000:80 -d --rm <image id> 
+the rm command there indicates - when a comtainer is stopped, the container will be removed automatically
+
+docker image inspect <image id>
+
+we can copy a file to container: docker cp <file name> <container name>:/<folder name>
+
+docker run -p 3000:80 -d --rm --name golasapp <image id>
+
+add tag to a image: docker build goal:latest .
+
+Pushing images to DockerHub
+
+Go to docker and create a repo in Docker Hub
+
+docker tag <old name> <new name>
+
+docker login first
+
+docker push image name
+
+docker pull <image name>
+
+docker run will pull image automatically
+
+data:
+    - code
+    - temporary app data, in the container
+    - permanent app data - stored in dataabase or a file - VOLUMES
+
+Volume persists data, e.g., docker run -p 3000:80 --rm --name --feedback-form --v feedback:/app/feedback feedback-node
+
+nodemon: detect code changes in the file and automatically restart server
+
+read only: bind mount
+
+named volumn will not be deleted when a container is shut down
+
+make docker read-only 
+
+manually create volume name
+
+docker volume inspect <volume name>
+
+.dockerignore: can also add to be ignored file
+
+ENV PORT 80
+
+user can also update env variable using command line, e.g., --env PORT=80
+
+if there are multiple env do: --e
+
+.env file: --env-file ./.env
+
+ARG DEFAULT_PORT=80
+
+ENV PORT $DEFAULT_PORT
+
+In command line, do: --build-arg DEFAULT_PORT=8000
+
+1. App in container send get request to web: works out of the box
+
+2. Container to local-host machine
+
+3. Container to container
+
+host.docker.internal as address to connect container and localhost
+
+get docker container ip address
+
+containers network
+
+docker network create <name>
+
+put container name as part of domain
+
+docker image/container prune
+
+docker-compose up -d
+
+docker-compose down -v
+
+docker-compose build --> this is to force build images 
+
+docker exec -it <container name> npm instruction
+
+ENTRYPOINT ["npm"]
+
+docker-compose run --rm npm init
+
+docker run and docker-compose up <name name>works the same way
+
+docker-compose up -d --build server: rebuild images if there is any changes in the image
+
+VPC: virtual public cloud
+
+Deploying to AWS EC2:
+    - Create and launch EC2 instance, VPC and security group
+    - Configure security group to expose all required ports to WWW
+    - Connect to instance (SSH), installl Docker and run container
+
+COPY a code snapshot into the image, do not use bind mount
+
+docker pull
+
+ECS: Elastic Container Service
+
